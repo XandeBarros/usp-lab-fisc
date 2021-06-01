@@ -46,11 +46,13 @@ def slope(arrayx, arrayy, type, pot):
     reglinear = np.polyfit(arrayx, arrayy, pot)
 
     if type == "log":
+        print(f" yf:{math.log10(np.polyval(reglinear, arrayx)[-1])}, yi:{math.log10(np.polyval(reglinear, arrayx)[0])}, xf:{math.log10(arrayx[-1])}, xi:{math.log10(arrayx[0])}")
         slopevalue = (
             math.log10(np.polyval(reglinear, arrayx)[-1])
             - math.log10(np.polyval(reglinear, arrayx)[0])
         ) / (math.log10(arrayx[-1]) - math.log10(arrayx[0]))
     else:
+        print(f" yf:{np.polyval(reglinear, arrayx)[-1]}, yi:{np.polyval(reglinear, arrayx)[0]}, xf:{arrayx[-1]}, xi:{arrayx[0]}")
         slopevalue = (
             np.polyval(reglinear, arrayx)[-1] -
             np.polyval(reglinear, arrayx)[0]
@@ -172,7 +174,7 @@ plotGraph(
     "F (N)",
     "x (m)",
     "Gráfico 1: Relação Linear x por F",
-    ["Dados coletados", "Melhor curva para dos dados"],
+    ["Dados coletados", "Melhor curva para os dados"],
     "linear",
     1,
 )
@@ -194,7 +196,7 @@ print(
 
 ################################################ Calculate and Ploting exp2-part1 ################################################
 
-# Ploting
+# Ploting linear graph
 
 plotGraph(
     length_exp2_cm,
@@ -203,8 +205,23 @@ plotGraph(
     [10, 40],
     "L (cm)",
     "x (mm)",
-    "Gráfico 2: Relação log-log x por L",
-    ["Dados coletados", "Melhor curva para dos dados"],
+    "Gráfico 2: Relação linear x por L",
+    ["Dados coletados", "Melhor curva para os dados"],
+    "linear",
+    3,
+)
+
+# Ploting log-log graph
+
+plotGraph(
+    length_exp2_cm,
+    bar_def_exp2_mm,
+    [10, 30],
+    [10, 40],
+    "L (cm)",
+    "x (mm)",
+    "Gráfico 3: Relação log-log x por L",
+    ["Dados coletados", "Melhor curva para os dados"],
     "log",
     3,
 )
@@ -226,8 +243,8 @@ plotGraph(
     [10, 40],
     r"$\ L ^ 3 \ \ (10 ^ {-3} \ \ m ^ 3) $",
     r"$\ x \ \ (10 ^ {-3} \ \ m ) $",
-    r"$\ Gráfico 3:\ \ Relação Linear \ \ x \ \ por \ \ L ^ 3 $",
-    ["Dados coletados", "Melhor curva para dos dados"],
+    r"$\ Gráfico \ \ 4:\ \ Relação \ \ Linear \ \ x \ \ por \ \ L ^ 3 $",
+    ["Dados coletados", "Melhor curva para os dados"],
     "linear",
     1,
 )
