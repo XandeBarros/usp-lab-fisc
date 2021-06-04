@@ -34,7 +34,7 @@ def mod_young_exp2(f, k, d, b):
 
 def error_mod_young_exp2(f, k, d, b, ef, ed, eb):
     error_mod_young = (
-        ((4 * ef ) / (k * ((d * 0.001) ** 3) * (b * 0.001)))
+        ((4 * ef) / (k * ((d * 0.001) ** 3) * (b * 0.001)))
         + ((4 * eb * f) / (k * ((d * 0.001) ** 3) * ((b * 0.001) ** 2)))
         + ((12 * ed * f) / (k * ((d * 0.001) ** 4) * (b * 0.001)))
     )
@@ -46,13 +46,15 @@ def slope(arrayx, arrayy, type, pot):
     reglinear = np.polyfit(arrayx, arrayy, pot)
 
     if type == "log":
-        print(f" yf:{math.log10(np.polyval(reglinear, arrayx)[-1])}, yi:{math.log10(np.polyval(reglinear, arrayx)[0])}, xf:{math.log10(arrayx[-1])}, xi:{math.log10(arrayx[0])}")
+        print(
+            f" yf:{math.log10(np.polyval(reglinear, arrayx)[-1])}, yi:{math.log10(np.polyval(reglinear, arrayx)[0])}, xf:{math.log10(arrayx[-1])}, xi:{math.log10(arrayx[0])}")
         slopevalue = (
             math.log10(np.polyval(reglinear, arrayx)[-1])
             - math.log10(np.polyval(reglinear, arrayx)[0])
         ) / (math.log10(arrayx[-1]) - math.log10(arrayx[0]))
     else:
-        print(f" yf:{np.polyval(reglinear, arrayx)[-1]}, yi:{np.polyval(reglinear, arrayx)[0]}, xf:{arrayx[-1]}, xi:{arrayx[0]}")
+        print(
+            f" yf:{np.polyval(reglinear, arrayx)[-1]}, yi:{np.polyval(reglinear, arrayx)[0]}, xf:{arrayx[-1]}, xi:{arrayx[0]}")
         slopevalue = (
             np.polyval(reglinear, arrayx)[-1] -
             np.polyval(reglinear, arrayx)[0]
