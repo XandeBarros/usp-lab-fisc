@@ -34,9 +34,9 @@ def mod_young_exp2(f, k, d, b):
 
 def error_mod_young_exp2(f, k, d, b, ef, ed, eb):
     error_mod_young = (
-        ((4 * ef * f) / (k * (d * 0.001) ** 3 * (b * 0.001)))
-        + ((4 * eb * f) / (k * (d * 0.001) ** 3 * (b * 0.001) ** 2))
-        + ((12 * ed * f) / (k * (d * 0.001) ** 4 * (b * 0.001)))
+        ((4 * ef ) / (k * ((d * 0.001) ** 3) * (b * 0.001)))
+        + ((4 * eb * f) / (k * ((d * 0.001) ** 3) * ((b * 0.001) ** 2)))
+        + ((12 * ed * f) / (k * ((d * 0.001) ** 4) * (b * 0.001)))
     )
     return error_mod_young
 
@@ -130,7 +130,7 @@ d = 1.00  # espessura em milimetros (lembrar de converter)
 deltab = 0.05 * (10 ** -3)
 deltad = 0.01 * (10 ** -3)
 deltal = 0.1 * (10 ** -2)
-deltaf = 0.1
+deltaf = 0.01
 
 db_exp1 = pd.read_excel(
     path.strip("‪u202a"),
@@ -173,7 +173,7 @@ plotGraph(
     [0, 0.06],
     "F (N)",
     "x (m)",
-    "",
+    "Gráfico 1 - Relação Deformação x Força",
     ["Dados coletados", "Melhor curva para os dados"],
     "linear",
     1,
@@ -205,7 +205,7 @@ plotGraph(
     [10, 40],
     "L (cm)",
     "x (mm)",
-    "",
+    "Gráfico 2 - Relação Deformação x Comprimento",
     ["Dados coletados", "Melhor curva para os dados"],
     "linear",
     3,
@@ -220,11 +220,12 @@ plotGraph(
     [10, 40],
     "L (cm)",
     "x (mm)",
-    "",
+    "Gráfico 3 - Relação log-log Deformação x Comprimento",
     ["Dados coletados", "Melhor curva para os dados"],
     "log",
     3,
 )
+
 # Calculate
 
 slope_exp2_part1 = slope(length_exp2_cm, bar_def_exp2_mm, "log", 3)
@@ -241,9 +242,9 @@ plotGraph(
     bar_def_exp2_mm,
     [0, 20],
     [10, 40],
-    r"$\ L ^ 3 \ \ (10 ^ {-3} \ \ m ^ 3) $",
-    r"$\ x \ \ (10 ^ {-3} \ \ m ) $",
-    r"",
+    r"$\ L ^ 3 \ \ (10^{-3} \ \ m ^ 3) $",
+    r"$\ x \ \ ( mm ) $",
+    r"$\ Gráfico \ \ 4\ \ -\ \ Relação\ \ Deformação\ \ x\ \ Comprimento ^ 3$",
     ["Dados coletados", "Melhor curva para os dados"],
     "linear",
     1,
@@ -256,11 +257,11 @@ slope_exp2_part2 = slope(cubiclength_exp2_potneg3,
 print(f"Coeficiente angular exp2: {slope_exp2_part2}")
 print(force_exp2, truncate(force_exp2, 1))
 exp2_mod_young = mod_young_exp2(force_exp2, slope_exp2_part2, d, b)
-exp2_error_mod_young = error_mod_young_exp1(
-    truncate(force_exp2, 1), slope_exp2_part2, d, b, deltaf, deltad, deltab
+exp2_error_mod_young = error_mod_young_exp2(
+    force_exp2, slope_exp2_part2, d, b, deltaf, deltad, deltab
 )
 
 print(exp2_mod_young, exp2_error_mod_young)
 print(
-    f"E = ({int(truncate(exp2_mod_young / 10 ** 10, 1))} mais ou menos {truncate(exp2_error_mod_young / 10 ** 11, 0)}) 10 ^ 10 Pa"
+    f"E = ({truncate(exp2_mod_young / 10 ** 10, 1)} mais ou menos {truncate(exp2_error_mod_young / 10 ** 10, 1)}) 10 ^ 10 Pa"
 )
