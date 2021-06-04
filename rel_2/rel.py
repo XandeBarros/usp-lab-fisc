@@ -137,7 +137,7 @@ deltaf = 0.01
 db_exp1 = pd.read_excel(
     path.strip("‪u202a"),
     header=[1],
-    usecols="A:C",
+    usecols="A:D",
     nrows=7,
     sheet_name="exp1_table_1_m_F_x",
 )  # database for first experience
@@ -152,6 +152,7 @@ db_exp2 = pd.read_excel(
 mass_exp1 = db_exp1["massa"].values
 force_exp1 = db_exp1["forca"].values
 bar_def_exp1 = db_exp1["def_barra"].values
+bar_def_exp1_plot = db_exp1["def_barra_mm"].values
 length_exp1 = db_exp2.length[0]
 
 mass_exp2 = truncate(db_exp1.massa[4], 5)
@@ -170,11 +171,11 @@ cubiclength_exp2_potneg3 = db_exp2["cubiclength_"].values
 
 plotGraph(
     force_exp1,
-    bar_def_exp1,
+    bar_def_exp1_plot,
     [0, 4],
-    [0, 0.06],
+    [0, 60],
     "F (N)",
-    "x (m)",
+    r"$\ x \ \ (10^{-3} \ \ m)$",
     "Gráfico 1 - Relação Deformação x Força",
     ["Dados coletados", "Melhor curva para os dados"],
     "linear",
