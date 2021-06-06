@@ -27,32 +27,34 @@ position = tbl.position;
 %% Clear temporary variables
 clear opts tbl
 
-%% Início do Código
+%% Variables for Exp2
 
-positionCm = 100*position;
-
+positionCm = 100*position; %% For a better visualization in graph for the exp2 will be ploted in (cm/s)x(s)
+ 
 velocity = positionCm./time;
 
 lengthVectors = length(time);
 
 fig = figure();
 
+x = time;
+y = velocity;
 
 %% Least Squares For Exp2
 
-avgVelocity = mean(velocity);
-avgTime = mean(time);
+avgY = mean(y);
+avgX = mean(x);
 
 num = 0;
 dem = 0;
 
 for i = 1:lengthVectors
-    num = num + (time(i)-avgTime)*velocity(i);
-    dem = dem + (time(i)-avgTime)^2;
+    num = num + (x(i)-avgX)*y(i);
+    dem = dem + (x(i)-avgX)^2;
 end
 
 a = num / dem;
-b = avgVelocity - a*avgTime;
+b = avgY - a*avgX;
 
 y = a*time + b;
 
@@ -61,8 +63,8 @@ numDeltaB = 0;
 demDeltaY = lengthVectors-2;
 
 for i = 1:lengthVectors
-  numDeltaY = numDeltaY + (a*time(i)+b-velocity(i))^2;
-  numDeltaB = numDeltaB + time(i)^2;
+  numDeltaY = numDeltaY + (a*x(i)+b-y(i))^2;
+  numDeltaB = numDeltaB + x(i)^2;
 end
 
 deltaY = sqrt(numDeltaY/demDeltaY);
@@ -80,4 +82,4 @@ legend('Dados', 'Regressão Linear Mínimos Quadrados', 'Location', 'northwest')
 
 grid on
 hold off
-
+clear x y
