@@ -3,7 +3,7 @@ gravity = 9.81; % m/s^2
 m = 119.69 / 1000; % Kg
 deltaM = 0.01 / 1000; % Kg
 Htotal = 3.010; % m
-deltaHBloco = 0.0005; % m, Altura do bloco é dividida por dois por tanto a incerteza também é.
+deltaHBloco = 0.001; % m
 K = 0.767; % N/m
 deltaK = 0.002; % N/m
 Li = 30.40 / 100; % m
@@ -15,7 +15,7 @@ deltaDef = 0.007; %m, Como L - L0 é uma subtração a incertaza da deformação
 
 % Part 1
 
-L1 = Htotal - 0.08;
+L1 = Htotal - 0.08; % 0.002
 
 
 energyPart1 = (m * gravity * 0.04) + ((K * ((L1 - Li)^ 2)) / 2);
@@ -34,7 +34,27 @@ incT = std(t);
 t = mean(t);
 
 v = 0.080 / t;
-deltaV = (((2 * deltaHBloco * t) + (incT) * 0.08) / (t^2));
+deltaV = (((deltaHBloco * t) + (incT) * 0.08) / (t^2));
 
 energyPart2 = (m * gravity * H2) + ((K * ((L2 - Li) ^ 2)) / 2) + ((m * (v ^ 2)) / 2);
 deltaEnergyPart2 = (gravity * H2 * deltaM) + (m * gravity * deltaH2) + (((L2-Li)^2 / 2) * deltaK) + (K * (L2 - Li) * deltaDef) + ((v^2 / 2) * deltaM) + (m * v * deltaV);
+
+%% Change Referencial
+
+Ha = 3.010 - 1.865 - 0.040;
+deltaHa = 0.001 * 3;
+
+L0 = 1.560;
+La = -1.065;
+deltaDef = 0.009;
+
+energy1RefL = (m * gravity * (-1) * Ha) + (K * (La - L0)^2 / 2);
+deltaEnergy1RefL = (gravity * Ha * deltaM) + (m * gravity * deltaHa) + (((La-L0)^2 / 2) * deltaK) + (K * ((-1) * (La - L0)) * deltaDef);
+
+Hb = -0.040;
+deltaHb = 0.001;
+Lb = 0;
+deltaDef = 0.007;
+
+energy2RefL = (m * gravity * Hb) + (K * (Lb - L0)^2 / 2) + (m * v^2 / 2);
+deltaEnergy2RefL = (gravity * Hb * deltaM) + (m * gravity * deltaHb) + (((Lb-L0)^2 / 2) * deltaK) + (K * (L2 - Li) * deltaDef) + ((v^2 / 2) * deltaM) + (m * v * deltaV);
